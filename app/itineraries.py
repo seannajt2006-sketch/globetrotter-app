@@ -1,80 +1,91 @@
 """
 app/itineraries.py
 
-Create and list itineraries for the authenticated user.
-
-Routes
-------
-POST /itineraries – create a new itinerary
-GET  /itineraries – list all itineraries for the logged-in user
-
-Both routes require a valid JWT in the Authorization header.
+Itinerary management Blueprint.
+Provides POST /itineraries (create) and GET /itineraries (list) endpoints.
+Both routes are protected by JWT authentication.
 """
-import uuid
-import datetime
+import logging
+from flask import Blueprint, request
+from app.models import ItineraryModel
+from app.utils import token_required, api_response
 
-from flask import Blueprint, request, jsonify
-
-from app.auth import get_current_user
-from app.models import get_itineraries_for_user, save_itinerary
-
+logger = logging.getLogger(__name__)
 itineraries_bp = Blueprint("itineraries", __name__)
 
 
 @itineraries_bp.route("/itineraries", methods=["POST"])
-def create_itinerary():
-    """Create a new itinerary for the authenticated user.
+@token_required
+def create_itinerary(current_user):
+    """Create a new travel itinerary for the logged-in user.
 
-    Expected JSON body:
-        {
-          "title": "Summer in Europe",
-          "destinations": ["Paris", "Rome"],
-          "start_date": "2025-06-01",
-          "end_date": "2025-06-15",
-          "notes": "Optional free-text notes"
-        }
-
-    Returns 201 with the created itinerary on success.
-    Requires: Authorization: ******
+    Requires: Authorization: Bearer <JWT>
+    Expected JSON:
+    {
+        "title": "Summer Trip to Paris",
+        "destination": "Paris, France",
+        "start_date": "2026-08-01",
+        "end_date": "2026-08-10",
+        "activities": ["Visit Eiffel Tower", "Explore Louvre"],
+        "notes": "Pack walking shoes"
+    }
     """
-    username = get_current_user(request)
-    if not username:
-        return jsonify({"error": "authentication required"}), 401
-
+    user_id = current_user.get("user_id")
     data = request.get_json(silent=True) or {}
-    title = data.get("title", "").strip()
-    destinations = data.get("destinations", [])
+
+    title = str(data.get("title", "")).strip()
+    destination = str(data.get("destination", "")).strip()
+    start_date = str(data.get("start_date", "")).strip()
+    end_date = str(data.get("end_date", "")).strip()
+    activities = data.get("activities", [])
+    notes = str(data.get("notes", "")).strip()
 
     if not title:
-        return jsonify({"error": "title is required"}), 400
+        return api_response(False, "Itinerary title is required", status_code=400)
 
-    if not isinstance(destinations, list):
-        return jsonify({"error": "destinations must be a list"}), 400
+    if not destination:
+        return api_response(False, "Destination is required", status_code=400)
 
-    itinerary = {
-        "id": str(uuid.uuid4()),
-        "username": username,
-        "title": title,
-        "destinations": destinations,
-        "start_date": data.get("start_date", ""),
-        "end_date": data.get("end_date", ""),
-        "notes": data.get("notes", ""),
-        "created_at": datetime.datetime.now(datetime.timezone.utc).isoformat(),
-    }
-    save_itinerary(itinerary)
-    return jsonify(itinerary), 201
+    if not isinstance(activities, list):
+        activities = []
+
+    itinerary = ItineraryModel.create_itinerary(
+        user_id=user_id,
+        title=title,
+        destination=destination,
+        start_date=start_date,
+        end_date=end_date,
+        activities=activities,
+        notes=notes
+    )
+
+    if not ItineraryModel.save(itinerary):
+        logger.error(f"Failed to save itinerary for user_id '{user_id}'.")
+        return api_response(False, "Failed to save itinerary", status_code=500)
+
+    logger.info(f"Created itinerary '{itinerary['id']}' for user_id '{user_id}'.")
+    return api_response(
+        True,
+        "Itinerary created successfully",
+        itinerary,
+        status_code=201
+    )
 
 
 @itineraries_bp.route("/itineraries", methods=["GET"])
-def list_itineraries():
-    """List all itineraries for the authenticated user.
+@token_required
+def list_itineraries(current_user):
+    """List all itineraries owned by the authenticated user.
 
-    Returns 200 with a JSON array of itinerary objects.
-    Requires: Authorization: ******
+    Requires: Authorization: Bearer <JWT>
     """
-    username = get_current_user(request)
-    if not username:
-        return jsonify({"error": "authentication required"}), 401
+    user_id = current_user.get("user_id")
+    user_itineraries = ItineraryModel.get_by_user_id(user_id)
 
-    itineraries = get_itineraries_for_user(username)
-    return jsonify(itineraries), 200
+    logger.info(f"Retrieved {len(user_itineraries)} itineraries for user_id '{user_id}'.")
+    return api_response(
+        True,
+        "Itineraries retrieved successfully",
+        user_itineraries,
+        status_code=200
+    )

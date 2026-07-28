@@ -1,73 +1,54 @@
 """
 app/destinations.py
-
-Destination search endpoint.
-
-Routes
-------
-GET /destinations?q=paris&tag=food&continent=Europe
-    Returns destinations that match any of the provided query parameters.
-    All parameters are optional; omitting them returns the full catalogue.
+Destination search Blueprint for Yaoundé Local Places.
+Provides GET /destinations endpoint supporting query parameters including
+category filtering for restaurants, markets, cafés, accommodations, and cultural sites.
 """
-from flask import Blueprint, request, jsonify
-
-from app.models import get_all_destinations
-
+import logging
+from flask import Blueprint, request
+from app.models import DestinationModel
+from app.utils import api_response
+logger = logging.getLogger(__name__)
 destinations_bp = Blueprint("destinations", __name__)
 
+VALID_CATEGORIES = ["restaurant", "market", "cafe", "accommodation", "cultural"]
 
 @destinations_bp.route("/destinations", methods=["GET"])
 def search_destinations():
-    """Search destinations by name keyword, tag, and/or continent.
-
+    """Search and filter local places in Yaoundé.
     Query parameters (all optional):
-        q          – free-text search against name, country, and description
-        tag        – filter by a single interest tag (e.g. "beach")
-        continent  – filter by continent name (e.g. "Europe")
-        max_cost   – filter by maximum average daily cost (integer)
-
-    Returns a JSON list of matching destination objects.
+        q          – free-text filter against name, address, description
+        category   – filter by place category (restaurant, market, cafe, accommodation, cultural)
+        tag        – filter by a single interest tag (e.g. "food")
+        max_cost   – filter by maximum daily cost integer
     """
-    q = request.args.get("q", "").strip().lower()
-    tag = request.args.get("tag", "").strip().lower()
-    continent = request.args.get("continent", "").strip().lower()
+    q = request.args.get("q", "").strip()
+    category = request.args.get("category", "").strip().lower()
+    tag = request.args.get("tag", "").strip()
     max_cost_str = request.args.get("max_cost", "").strip()
-
     max_cost = None
     if max_cost_str:
         try:
             max_cost = int(max_cost_str)
         except ValueError:
-            return jsonify({"error": "max_cost must be an integer"}), 400
-
-    destinations = get_all_destinations()
-    results = []
-
-    for dest in destinations:
-        # Free-text filter
-        if q:
-            searchable = " ".join([
-                dest.get("name", ""),
-                dest.get("country", ""),
-                dest.get("description", ""),
-            ]).lower()
-            if q not in searchable:
-                continue
-
-        # Tag filter
-        if tag and tag not in [t.lower() for t in dest.get("tags", [])]:
-            continue
-
-        # Continent filter
-        if continent and continent != dest.get("continent", "").lower():
-            continue
-
-        # Cost filter – skip destinations that have no cost information or exceed the limit
-        if max_cost is not None:
-            cost = dest.get("avg_cost_per_day")
-            if cost is None or cost > max_cost:
-                continue
-
-        results.append(dest)
-
-    return jsonify(results), 200
+            return api_response(False, "max_cost parameter must be an integer", status_code=400)
+    # Validate category
+    if category and category not in VALID_CATEGORIES:
+        return api_response(
+            False,
+            f"Invalid category '{category}'. Valid categories: {', '.join(VALID_CATEGORIES)}",
+            status_code=400
+        )
+    logger.info(f"Searching Yaoundé places with params q='{q}', category='{category}', tag='{tag}', max_cost={max_cost}")
+    results = DestinationModel.filter_destinations(
+        q=q,
+        tag=tag,
+        category=category,
+        max_cost=max_cost
+    )
+    return api_response(
+        True,
+        f"Found {len(results)} place(s) in Yaoundé",
+        results,
+        status_code=200
+    )

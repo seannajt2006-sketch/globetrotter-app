@@ -1,20 +1,24 @@
-# Use an official lightweight Python runtime as the base image
+# Python 3.9-slim image for backend Flask server
 FROM python:3.9-slim
 
-# Set a working directory inside the container
 WORKDIR /globetrotter
 
-# Copy dependency file first to leverage Docker layer caching
+# Copy requirements file first to leverage Docker caching
 COPY requirements.txt .
 
 # Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the application source code
-COPY . .
+# Copy backend application source code
+COPY app ./app
+COPY data ./data
 
-# Expose the port the app runs on
+# Expose backend API port
 EXPOSE 5000
 
-# Run the application
+# Set environment variables
+ENV PORT=5000
+ENV FLASK_DEBUG=0
+
+# Command to execute Flask backend app
 CMD ["python", "app/main.py"]

@@ -1,34 +1,52 @@
-# Python
+# Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
+
+# C extensions
 *.so
+
+# Distribution / packaging
 .Python
 env/
 venv/
-.venv/
 ENV/
-*.egg
-*.egg-info/
-dist/
+.venv/
 build/
+develop-eggs/
+dist/
+downloads/
+eggs/
 .eggs/
-.pytest_cache/
-.mypy_cache/
-*.pyo
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
 
 # Environment variables
 .env
-.env.*
+.env.local
 
-# Docker
-.dockerignore
+# Node / React
+node_modules/
+frontend/node_modules/
+frontend/dist/
+frontend/build/
 
-# Data files (populated at runtime; keep only .gitkeep)
-data/*.json
-
-# IDE / editor
+# IDE / Editor configuration
 .vscode/
 .idea/
 *.swp
 *.swo
+
+# Docker
+.docker/
+
+# Local Data Runtime Storage (Keep seed destinations.json)
+data/users.json
+data/itineraries.json

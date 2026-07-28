@@ -1,66 +1,51 @@
 """
 app/recommendations.py
-
-Personalised destination recommendations.
-
-Routes
-------
-GET /recommendations
-    Returns destinations that best match the authenticated user's preferences.
-    Requires a valid JWT in the Authorization header.
+Personalized place recommendations Blueprint for Yaoundé.
+Provides GET /recommendations endpoint matching user preference tags against Yaoundé places.
 """
-from flask import Blueprint, request, jsonify
-
-from app.auth import get_current_user
-from app.models import get_all_destinations, get_user_by_username
-
+import logging
+from flask import Blueprint, request
+from app.models import UserModel, DestinationModel
+from app.utils import token_required, api_response
+logger = logging.getLogger(__name__)
 recommendations_bp = Blueprint("recommendations", __name__)
-
-
 @recommendations_bp.route("/recommendations", methods=["GET"])
-def get_recommendations():
-    """Return personalised destination recommendations for the logged-in user.
-
-    Recommendations are derived by scoring each destination against the
-    user's preference tags.  Destinations are returned in descending score
-    order.  An optional *limit* query parameter caps the number of results
-    (default 5).
-
-    Requires: Authorization: ******
+@token_required
+def get_recommendations(current_user):
+    """Return personalized recommendations for the authenticated user based on preference tags.
+    Requires: Authorization: Bearer <JWT>
+    Query params:
+        limit – maximum number of recommendations to return (default: 5)
     """
-    username = get_current_user(request)
-    if not username:
-        return jsonify({"error": "authentication required"}), 401
-
-    user = get_user_by_username(username)
+    user_id = current_user.get("user_id")
+    username = current_user.get("username")
+    user = UserModel.find_by_id(user_id) or UserModel.find_by_username(username)
     if not user:
-        return jsonify({"error": "user not found"}), 404
-
-    preferences = [p.lower() for p in user.get("preferences", [])]
-
-    # Parse optional limit parameter
+        logger.warning(f"User not found for recommendations: user_id='{user_id}', username='{username}'")
+        return api_response(False, "User account not found", status_code=404)
+    user_prefs = [p.lower() for p in user.get("preferences", [])]
+    # Parse limit parameter
+    limit_str = request.args.get("limit", "5")
     try:
-        limit = int(request.args.get("limit", 5))
+        limit = max(1, int(limit_str))
     except ValueError:
-        return jsonify({"error": "limit must be an integer"}), 400
-
-    destinations = get_all_destinations()
-
-    # Score each destination: +1 for every preference tag that matches
-    scored = []
+        return api_response(False, "limit parameter must be a positive integer", status_code=400)
+    destinations = DestinationModel.get_all()
+    # Calculate match score for each place based on tag matches
+    scored_destinations = []
     for dest in destinations:
         dest_tags = [t.lower() for t in dest.get("tags", [])]
-        score = sum(1 for pref in preferences if pref in dest_tags)
-        scored.append((score, dest))
-
-    # Sort by score descending, then by name for stable ordering
-    scored.sort(key=lambda x: (-x[0], x[1].get("name", "")))
-
-    # Build result list, including the match score for transparency
-    results = []
-    for score, dest in scored[:limit]:
-        entry = dict(dest)
-        entry["match_score"] = score
-        results.append(entry)
-
-    return jsonify(results), 200
+        match_score = sum(1 for pref in user_prefs if pref in dest_tags)
+        dest_copy = dict(dest)
+        dest_copy["match_score"] = match_score
+        scored_destinations.append(dest_copy)
+    # Sort descending by match_score, then alphabetically by place name
+    scored_destinations.sort(key=lambda d: (-d["match_score"], d.get("name", "")))
+    recommendations = scored_destinations[:limit]
+    logger.info(f"Generated {len(recommendations)} recommendations for user '{user['username']}'.")
+    return api_response(
+        True,
+        "Personalized recommendations retrieved successfully",
+        recommendations,
+        status_code=200
+    )
