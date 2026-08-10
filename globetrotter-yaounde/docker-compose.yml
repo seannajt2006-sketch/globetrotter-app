@@ -1,0 +1,41 @@
+version: "3.9"
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: globetrotter-backend:latest
+    container_name: globetrotter_backend
+    ports:
+      - "5000:5000"
+    environment:
+      - PORT=5000
+      - FLASK_DEBUG=0
+      - SECRET_KEY=globetrotter-super-secret-key-2026
+    volumes:
+      - ./data:/app/data:rw
+    restart: unless-stopped
+    networks:
+      - globetrotter-net
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    image: globetrotter-frontend:latest
+    container_name: globetrotter_frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+    networks:
+      - globetrotter-net
+
+volumes:
+  data:
+
+networks:
+  globetrotter-net:
+    driver: bridge
