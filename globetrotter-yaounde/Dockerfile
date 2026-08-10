@@ -22,3 +22,5 @@ ENV FLASK_DEBUG=0
 ENV PYTHONPATH=/globetrotter
 
 CMD ["python", "run.py"]
+CMD ["python", "run.py"]
+CMD ["python", "run.py"]
