@@ -18,5 +18,31 @@
     "preferences": [
       "culture"
     ]
+  },
+  {
+    "id": "eaa2415a",
+    "username": "kynm",
+    "email": "kynmmarshall@gmail.com",
+    "password": "scrypt:32768:8:1$APbL9lRWQOe2nZuF$ede28d33d3cbb9e827068b72f06c36521b9bd19bb54b6d365df90ef3abfce6ce655d9c0c70753390768c6fef5c9eda4ea77f2212d261cb2a4196fb025cec0e27",
+    "preferences": [
+      "luxury",
+      "market",
+      "cafe",
+      "wellness",
+      "city",
+      "accommodation"
+    ]
+  },
+  {
+    "id": "50d1051c",
+    "username": "john",
+    "email": "john@gmail.com",
+    "password": "scrypt:32768:8:1$ZgNOKfyIDL8i90P8$67de7cb12fa5ef36f6d3eb528de19a394697c90e7ec7eb6684be41c4434655730c14367f8e68ae030f240041197977524577584b4f618ff5ff32ccd19b484b97",
+    "preferences": [
+      "budget",
+      "restaurant",
+      "nightlife",
+      "cafe"
+    ]
   }
 ]

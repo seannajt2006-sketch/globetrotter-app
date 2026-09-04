@@ -26,6 +26,8 @@ services:
       - PORT=5001
     ports:
       - "5001:5001"
+    volumes:
+      - ./services/user-service/data:/app/data
     networks:
       - globetrotter-network
 
@@ -41,6 +43,8 @@ services:
       - RABBITMQ_PORT=5672
     ports:
       - "5002:5002"
+    volumes:
+      - ./services/itinerary-service/data:/app/data
     depends_on:
       rabbitmq:
         condition: service_healthy
@@ -61,6 +65,8 @@ services:
       - ITINERARY_SERVICE_URL=http://itinerary-service:5002
     ports:
       - "5003:5003"
+    volumes:
+      - ./services/recommendation-service/data:/app/data
     depends_on:
       user-service:
         condition: service_started
@@ -81,6 +87,8 @@ services:
       - PORT=5004
     ports:
       - "5004:5004"
+    volumes:
+      - ./services/community-service/data:/app/data
     networks:
       - globetrotter-network
 

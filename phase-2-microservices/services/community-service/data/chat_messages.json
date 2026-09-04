@@ -1,1 +1,39 @@
-[]
+[
+  {
+    "id": "msg-ad0bbaa6",
+    "user_id": "50d1051c",
+    "username": "john",
+    "type": "text",
+    "content": "hello\\",
+    "audio_url": null,
+    "duration": null,
+    "reply_to": null,
+    "created_at": "2026-09-04T19:13:47.540073+00:00"
+  },
+  {
+    "id": "msg-d8db8295",
+    "user_id": "eaa2415a",
+    "username": "kynm",
+    "type": "text",
+    "content": "hi how're u",
+    "audio_url": null,
+    "duration": null,
+    "reply_to": {
+      "id": "msg-ad0bbaa6",
+      "username": "john",
+      "preview": "hello\\"
+    },
+    "created_at": "2026-09-04T19:14:02.429768+00:00"
+  },
+  {
+    "id": "msg-bc696fe3",
+    "user_id": "eaa2415a",
+    "username": "kynm",
+    "type": "voice",
+    "content": null,
+    "audio_url": "/chat/voice/99b717bd-068b-45e8-98d3-052bfd17e6b4.webm",
+    "duration": 5,
+    "reply_to": null,
+    "created_at": "2026-09-04T19:14:09.577574+00:00"
+  }
+]

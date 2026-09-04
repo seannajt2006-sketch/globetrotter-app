@@ -1,1 +1,38 @@
-[]
+[
+  {
+    "id": "cmt-69884db4",
+    "destination_id": "yaounde-002",
+    "parent_id": null,
+    "user_id": "50d1051c",
+    "username": "john",
+    "text": "nice interesting place",
+    "created_at": "2026-09-04T19:15:09.438106+00:00",
+    "upvotes": [
+      "eaa2415a",
+      "50d1051c"
+    ],
+    "downvotes": []
+  },
+  {
+    "id": "cmt-6041cfd4",
+    "destination_id": "yaounde-002",
+    "parent_id": "cmt-69884db4",
+    "user_id": "eaa2415a",
+    "username": "kynm",
+    "text": "yeah definitely",
+    "created_at": "2026-09-04T19:15:25.390798+00:00",
+    "upvotes": [],
+    "downvotes": []
+  },
+  {
+    "id": "cmt-1be16a36",
+    "destination_id": "yaounde-002",
+    "parent_id": null,
+    "user_id": "50d1051c",
+    "username": "john",
+    "text": "hlo",
+    "created_at": "2026-09-04T19:16:32.137588+00:00",
+    "upvotes": [],
+    "downvotes": []
+  }
+]
