@@ -191,6 +191,7 @@ def handle_send_message(data):
         return
 
     msg_type = (data or {}).get("type", "text")
+    reply_to_id = (data or {}).get("reply_to")
     if msg_type == "voice":
         audio_base64 = (data or {}).get("audio_base64", "")
         duration = (data or {}).get("duration", 0)
@@ -200,7 +201,8 @@ def handle_send_message(data):
             user_id=sender["user_id"],
             username=sender["username"],
             audio_base64=audio_base64,
-            duration=duration
+            duration=duration,
+            reply_to_id=reply_to_id
         )
     else:
         content = str((data or {}).get("content", "")).strip()
@@ -209,7 +211,8 @@ def handle_send_message(data):
         message = ChatMessageModel.create_text_message(
             user_id=sender["user_id"],
             username=sender["username"],
-            content=content
+            content=content,
+            reply_to_id=reply_to_id
         )
 
     if message and ChatMessageModel.save(message):

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { io } from 'socket.io-client';
-import { Send, Mic, Square, Users } from 'lucide-react';
+import { Send, Mic, Square, Users, CornerUpLeft, X } from 'lucide-react';
 
 function formatTime(isoString) {
   return new Date(isoString).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
@@ -13,6 +13,7 @@ export default function CommunityChat({ token, user }) {
   const [inputText, setInputText] = useState('');
   const [isRecording, setIsRecording] = useState(false);
   const [connected, setConnected] = useState(false);
+  const [replyTarget, setReplyTarget] = useState(null);
 
   const socketRef = useRef(null);
   const listRef = useRef(null);
@@ -66,13 +67,19 @@ export default function CommunityChat({ token, user }) {
   const handleSendText = (e) => {
     e.preventDefault();
     if (!inputText.trim() || !socketRef.current) return;
-    socketRef.current.emit('send_message', { type: 'text', content: inputText.trim() });
+    socketRef.current.emit('send_message', {
+      type: 'text',
+      content: inputText.trim(),
+      reply_to: replyTarget?.id || null
+    });
     setInputText('');
+    setReplyTarget(null);
   };
 
   const handleToggleRecording = async () => {
     if (isRecording) {
       mediaRecorderRef.current?.stop();
+      setIsRecording(false);
       return;
     }
 
@@ -90,15 +97,18 @@ export default function CommunityChat({ token, user }) {
         const duration = Math.round((Date.now() - recordStartRef.current) / 1000);
         const blob = new Blob(audioChunksRef.current, { type: 'audio/webm' });
         const reader = new FileReader();
+        const replyToId = replyTarget?.id || null;
         reader.onloadend = () => {
           socketRef.current?.emit('send_message', {
             type: 'voice',
             audio_base64: reader.result,
-            duration
+            duration,
+            reply_to: replyToId
           });
         };
         reader.readAsDataURL(blob);
         stream.getTracks().forEach((track) => track.stop());
+        setReplyTarget(null);
       };
 
       recorder.start();
@@ -146,12 +156,29 @@ export default function CommunityChat({ token, user }) {
                 <div key={msg.id} className={`chat-bubble-row ${isOwn ? 'own' : ''}`}>
                   <div className="chat-bubble">
                     {!isOwn && <div className="chat-bubble-sender">{msg.username}</div>}
+                    {msg.reply_to && (
+                      <div className="chat-reply-quote">
+                        <span className="chat-reply-quote-author">{msg.reply_to.username}</span>
+                        <span className="chat-reply-quote-text">{msg.reply_to.preview}</span>
+                      </div>
+                    )}
                     {msg.type === 'voice' ? (
                       <audio className="voice-player" controls src={msg.audio_url} />
                     ) : (
                       <div className="chat-bubble-text">{msg.content}</div>
                     )}
-                    <div className="chat-bubble-time">{formatTime(msg.created_at)}</div>
+                    <div className="chat-bubble-footer">
+                      <button
+                        type="button"
+                        className="chat-reply-btn"
+                        onClick={() => setReplyTarget(msg)}
+                        title="Reply"
+                      >
+                        <CornerUpLeft size={13} />
+                        <span>Reply</span>
+                      </button>
+                      <span className="chat-bubble-time">{formatTime(msg.created_at)}</span>
+                    </div>
                   </div>
                 </div>
               );
@@ -160,25 +187,40 @@ export default function CommunityChat({ token, user }) {
         </div>
 
         <form className="chat-input-bar" onSubmit={handleSendText}>
-          <button
-            type="button"
-            className={`voice-record-btn ${isRecording ? 'recording' : ''}`}
-            onClick={handleToggleRecording}
-            title={isRecording ? 'Stop recording' : 'Record voice message'}
-          >
-            {isRecording ? <Square size={18} /> : <Mic size={18} />}
-          </button>
-          <input
-            type="text"
-            className="input-control"
-            placeholder="Type a message..."
-            value={inputText}
-            onChange={(e) => setInputText(e.target.value)}
-            disabled={isRecording}
-          />
-          <button type="submit" className="btn btn-primary" disabled={!inputText.trim() || isRecording}>
-            <Send size={18} />
-          </button>
+          {replyTarget && (
+            <div className="chat-reply-preview">
+              <div>
+                <span className="chat-reply-quote-author">Replying to {replyTarget.username}</span>
+                <div className="chat-reply-quote-text">
+                  {replyTarget.type === 'voice' ? '🎤 Voice message' : replyTarget.content}
+                </div>
+              </div>
+              <button type="button" className="chat-reply-cancel" onClick={() => setReplyTarget(null)}>
+                <X size={16} />
+              </button>
+            </div>
+          )}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+            <button
+              type="button"
+              className={`voice-record-btn ${isRecording ? 'recording' : ''}`}
+              onClick={handleToggleRecording}
+              title={isRecording ? 'Stop recording' : 'Record voice message'}
+            >
+              {isRecording ? <Square size={18} /> : <Mic size={18} />}
+            </button>
+            <input
+              type="text"
+              className="input-control"
+              placeholder="Type a message..."
+              value={inputText}
+              onChange={(e) => setInputText(e.target.value)}
+              disabled={isRecording}
+            />
+            <button type="submit" className="btn btn-primary" disabled={!inputText.trim() || isRecording}>
+              <Send size={18} />
+            </button>
+          </div>
         </form>
       </div>
     </div>

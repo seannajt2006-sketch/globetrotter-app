@@ -153,7 +153,17 @@ class CommentModel:
 
 class ChatMessageModel:
     @staticmethod
-    def create_text_message(user_id: str, username: str, content: str) -> dict:
+    def _build_reply_preview(reply_to_id: str) -> dict | None:
+        if not reply_to_id:
+            return None
+        for m in _load(MESSAGES_FILE):
+            if m["id"] == reply_to_id:
+                preview = m["content"] if m["type"] == "text" else "🎤 Voice message"
+                return {"id": m["id"], "username": m["username"], "preview": (preview or "")[:120]}
+        return None
+
+    @staticmethod
+    def create_text_message(user_id: str, username: str, content: str, reply_to_id: str = None) -> dict:
         return {
             "id": f"msg-{str(uuid.uuid4())[:8]}",
             "user_id": user_id,
@@ -162,11 +172,12 @@ class ChatMessageModel:
             "content": content,
             "audio_url": None,
             "duration": None,
+            "reply_to": ChatMessageModel._build_reply_preview(reply_to_id),
             "created_at": _now_iso()
         }
 
     @staticmethod
-    def create_voice_message(user_id: str, username: str, audio_base64: str, duration: float = 0) -> dict | None:
+    def create_voice_message(user_id: str, username: str, audio_base64: str, duration: float = 0, reply_to_id: str = None) -> dict | None:
         """Decode a base64 (optionally data-URL prefixed) audio blob and persist it as a .webm file."""
         try:
             _, _, encoded = audio_base64.partition(",")
@@ -193,6 +204,7 @@ class ChatMessageModel:
             "content": None,
             "audio_url": f"/chat/voice/{filename}",
             "duration": duration,
+            "reply_to": ChatMessageModel._build_reply_preview(reply_to_id),
             "created_at": _now_iso()
         }
 
