@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MapPin, Search, Sparkles, Map, PlusCircle, LogIn, LogOut, Menu, X, User, MessageSquare } from 'lucide-react';
+import { MapPin, Search, Sparkles, Map, PlusCircle, LogIn, LogOut, Menu, X, User, MessageSquare, Compass } from 'lucide-react';
 
 export default function Navbar({ activeTab, setActiveTab, user, onLogout }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -33,6 +33,16 @@ export default function Navbar({ activeTab, setActiveTab, user, onLogout }) {
             >
               <Search size={18} />
               <span>Explore</span>
+            </button>
+          </li>
+
+          <li>
+            <button
+              className={`nav-item ${activeTab === 'map' ? 'active' : ''}`}
+              onClick={() => handleNavClick('map')}
+            >
+              <Compass size={18} />
+              <span>Map</span>
             </button>
           </li>
 

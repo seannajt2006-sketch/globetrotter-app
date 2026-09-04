@@ -180,6 +180,18 @@ body {
   box-shadow: var(--shadow-md);
 }
 
+.card-clickable {
+  cursor: pointer;
+}
+
+.card-clickable:hover {
+  transform: translateY(-3px);
+}
+
+.card-clickable button {
+  cursor: pointer;
+}
+
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -381,6 +393,47 @@ body {
   z-index: 1;
 }
 
+.map-wrapper-full {
+  height: calc(100vh - 300px);
+  min-height: 480px;
+}
+
+.user-location-marker {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #3b82f6;
+  border: 3px solid white;
+  box-shadow: 0 0 0 2px #3b82f6, 0 0 10px rgba(0,0,0,0.5);
+  position: relative;
+}
+
+.user-location-pulse {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 18px;
+  height: 18px;
+  margin: -9px 0 0 -9px;
+  border-radius: 50%;
+  background: rgba(59, 130, 246, 0.5);
+  animation: user-location-ping 1.8s infinite;
+}
+
+@keyframes user-location-ping {
+  0% { transform: scale(1); opacity: 0.8; }
+  100% { transform: scale(2.8); opacity: 0; }
+}
+
+.spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
 .leaflet-container {
   width: 100%;
   height: 100%;
@@ -522,6 +575,98 @@ body {
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
+}
+
+/* --------------------------------------------------------------------------
+   Destination Detail Page
+   -------------------------------------------------------------------------- */
+.detail-hero {
+  position: relative;
+  width: 100%;
+  height: 320px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  margin-bottom: 1.25rem;
+  box-shadow: var(--shadow-md);
+}
+
+.detail-hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.detail-hero-fallback {
+  background: linear-gradient(135deg, rgba(6, 182, 212, 0.35) 0%, var(--bg-card) 100%);
+}
+
+.detail-hero-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1.25rem;
+  background: linear-gradient(180deg, rgba(11, 15, 25, 0.15) 0%, rgba(11, 15, 25, 0.85) 100%);
+}
+
+.detail-back-btn {
+  align-self: flex-start;
+  backdrop-filter: blur(6px);
+  background: rgba(21, 28, 44, 0.7);
+}
+
+.detail-hero-content h1 {
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 0.4rem;
+}
+
+.detail-hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.detail-hero-meta span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.detail-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.detail-stat-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.detail-stat-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.detail-stat-value {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-main);
+  text-transform: capitalize;
 }
 
 /* --------------------------------------------------------------------------

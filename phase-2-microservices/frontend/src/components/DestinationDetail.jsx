@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowLeft, MapPin, Star, ThumbsUp, ThumbsDown, MessageCircle, Send } from 'lucide-react';
+import { ArrowLeft, MapPin, Star, ThumbsUp, ThumbsDown, MessageCircle, Send, Navigation } from 'lucide-react';
 
 function timeAgo(isoString) {
   const diffMs = Date.now() - new Date(isoString).getTime();
@@ -99,7 +99,7 @@ function CommentItem({ comment, token, user, onReplyPosted, onVote, isReply = fa
   );
 }
 
-export default function DestinationDetail({ destination, token, user, onBack }) {
+export default function DestinationDetail({ destination, token, user, onBack, onGetDirections }) {
   const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -188,30 +188,58 @@ export default function DestinationDetail({ destination, token, user, onBack }) 
 
   return (
     <div>
-      <button className="btn btn-secondary" style={{ marginBottom: '1.2rem' }} onClick={onBack}>
-        <ArrowLeft size={16} />
-        <span>Back</span>
-      </button>
-
-      <div className="card" style={{ marginBottom: '1.5rem' }}>
-        {destination.image_url && (
-          <div style={{ width: '100%', height: '260px', borderRadius: 'var(--radius-sm)', overflow: 'hidden', marginBottom: '1.2rem' }}>
-            <img src={destination.image_url} alt={destination.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-          </div>
+      <div className="detail-hero">
+        {destination.image_url ? (
+          <img className="detail-hero-img" src={destination.image_url} alt={destination.name} />
+        ) : (
+          <div className="detail-hero-img detail-hero-fallback" />
         )}
+        <div className="detail-hero-overlay">
+          <button className="btn btn-secondary detail-back-btn" onClick={onBack}>
+            <ArrowLeft size={16} />
+            <span>Back</span>
+          </button>
 
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.4rem' }}>
-          <h2 style={{ fontSize: '1.6rem', fontWeight: 800 }}>{destination.name}</h2>
-          <span className="badge badge-accent">
-            <Star size={12} fill="currentColor" /> {destination.rating || '4.0'}
+          <div className="detail-hero-content">
+            {destination.category && (
+              <span className="badge badge-primary" style={{ marginBottom: '0.6rem' }}>{destination.category}</span>
+            )}
+            <h1>{destination.name}</h1>
+            <div className="detail-hero-meta">
+              <span><MapPin size={16} /> {destination.address || 'Yaoundé'}</span>
+              <span><Star size={16} fill="currentColor" /> {destination.rating || '4.0'}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '1rem' }}>
+        <button className="btn btn-primary" onClick={() => onGetDirections(destination)}>
+          <Navigation size={16} />
+          <span>Get Directions</span>
+        </button>
+      </div>
+
+      <div className="detail-stats-grid">
+        <div className="detail-stat-card">
+          <span className="detail-stat-label">Est. Daily Cost</span>
+          <span className="detail-stat-value" style={{ color: 'var(--accent)' }}>
+            {destination.cost_per_day > 0 ? `${destination.cost_per_day.toLocaleString()} XAF` : 'Free'}
           </span>
         </div>
-
-        <div style={{ fontSize: '0.9rem', color: 'var(--text-muted)', marginBottom: '0.8rem', display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
-          <MapPin size={16} /> {destination.address || 'Yaoundé'}
+        <div className="detail-stat-card">
+          <span className="detail-stat-label">Category</span>
+          <span className="detail-stat-value">{destination.category || 'General'}</span>
         </div>
+        <div className="detail-stat-card">
+          <span className="detail-stat-label">Rating</span>
+          <span className="detail-stat-value">{destination.rating || '4.0'} / 5</span>
+        </div>
+      </div>
 
-        <p style={{ fontSize: '0.95rem', color: 'var(--text-main)', marginBottom: '1rem' }}>
+      <div className="card" style={{ marginBottom: '1.5rem' }}>
+        <h3 style={{ fontSize: '1.1rem', fontWeight: 700, marginBottom: '0.6rem' }}>About this place</h3>
+        <p style={{ fontSize: '0.95rem', color: 'var(--text-main)', marginBottom: destination.tags?.length ? '1rem' : 0 }}>
           {destination.description}
         </p>
 
@@ -222,13 +250,6 @@ export default function DestinationDetail({ destination, token, user, onBack }) 
             ))}
           </div>
         )}
-
-        <div style={{ marginTop: '1rem', paddingTop: '1rem', borderTop: '1px solid var(--border-color)' }}>
-          <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Est. Daily Cost</span>
-          <div style={{ fontWeight: 700, color: 'var(--accent)', fontSize: '1.1rem' }}>
-            {destination.cost_per_day > 0 ? `${destination.cost_per_day.toLocaleString()} XAF` : 'Free'}
-          </div>
-        </div>
       </div>
 
       <div className="card">

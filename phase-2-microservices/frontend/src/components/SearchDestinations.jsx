@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Search, Filter, Star, DollarSign, MapPin, Plus, Map as MapIcon, Info } from 'lucide-react';
-import MapComponent from './MapComponent';
+import { Search, Filter, Star, DollarSign, MapPin, Plus, Navigation } from 'lucide-react';
 
-export default function SearchDestinations({ user, onSelectDestinationForTrip, onViewDestination }) {
+export default function SearchDestinations({ user, onSelectDestinationForTrip, onViewDestination, onGetDirections }) {
   const [destinations, setDestinations] = useState([]);
   const [query, setQuery] = useState('');
   const [category, setCategory] = useState('');
   const [maxCost, setMaxCost] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [showMap, setShowMap] = useState(true);
 
   const fetchDestinations = async () => {
     setLoading(true);
@@ -54,14 +52,6 @@ export default function SearchDestinations({ user, onSelectDestinationForTrip, o
             Find restaurants, markets, cafes, hotels, and cultural landmarks across the capital
           </p>
         </div>
-
-        <button
-          className={`btn ${showMap ? 'btn-primary' : 'btn-secondary'}`}
-          onClick={() => setShowMap(!showMap)}
-        >
-          <MapIcon size={18} />
-          <span>{showMap ? 'Hide Map' : 'Show Interactive Map'}</span>
-        </button>
       </div>
 
       {/* Filter Bar */}
@@ -119,11 +109,6 @@ export default function SearchDestinations({ user, onSelectDestinationForTrip, o
         </div>
       </form>
 
-      {/* Interactive Map View */}
-      {showMap && (
-        <MapComponent items={destinations} center={[3.8480, 11.5021]} zoom={13} />
-      )}
-
       {error && (
         <div className="alert alert-error">
           <span>{error}</span>
@@ -142,7 +127,12 @@ export default function SearchDestinations({ user, onSelectDestinationForTrip, o
 
           <div className="grid">
             {destinations.map((dest) => (
-              <div key={dest.id} className="card" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+              <div
+                key={dest.id}
+                className="card card-clickable"
+                style={{ display: 'flex', flexDirection: 'column', height: '100%' }}
+                onClick={() => onViewDestination(dest)}
+              >
                 {dest.image_url && (
                   <div style={{ width: '100%', height: '160px', borderRadius: 'var(--radius-sm)', overflow: 'hidden', marginBottom: '1rem' }}>
                     <img src={dest.image_url} alt={dest.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
@@ -176,17 +166,17 @@ export default function SearchDestinations({ user, onSelectDestinationForTrip, o
                     <button
                       className="btn btn-secondary"
                       style={{ padding: '0.4rem 0.8rem', fontSize: '0.85rem' }}
-                      onClick={() => onViewDestination(dest)}
+                      onClick={(e) => { e.stopPropagation(); onGetDirections(dest); }}
                     >
-                      <Info size={16} />
-                      <span>Details</span>
+                      <Navigation size={16} />
+                      <span>Get Directions</span>
                     </button>
 
                     {user && (
                       <button
                         className="btn btn-outline"
                         style={{ padding: '0.4rem 0.8rem', fontSize: '0.85rem' }}
-                        onClick={() => onSelectDestinationForTrip(dest)}
+                        onClick={(e) => { e.stopPropagation(); onSelectDestinationForTrip(dest); }}
                       >
                         <Plus size={16} />
                         <span>Add to Trip</span>

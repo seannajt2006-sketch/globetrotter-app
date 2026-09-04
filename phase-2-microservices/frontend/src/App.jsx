@@ -8,6 +8,7 @@ import CreateItinerary from './components/CreateItinerary';
 import ViewItineraries from './components/ViewItineraries';
 import DestinationDetail from './components/DestinationDetail';
 import CommunityChat from './components/CommunityChat';
+import MapExplorer from './components/MapExplorer';
 import { MapPin } from 'lucide-react';
 
 export default function App() {
@@ -20,6 +21,7 @@ export default function App() {
   const [preselectedDestination, setPreselectedDestination] = useState(null);
   const [selectedDestination, setSelectedDestination] = useState(null);
   const [previousTab, setPreviousTab] = useState('search');
+  const [mapFocusDestination, setMapFocusDestination] = useState(null);
 
   const handleLoginSuccess = (authData) => {
     const userPayload = {
@@ -58,6 +60,11 @@ export default function App() {
     setActiveTab('destination-detail');
   };
 
+  const handleGetDirections = (dest) => {
+    setMapFocusDestination(dest);
+    setActiveTab('map');
+  };
+
   const handleItineraryCreated = () => {
     setPreselectedDestination(null);
     setActiveTab('itineraries');
@@ -92,6 +99,7 @@ export default function App() {
             user={user}
             onSelectDestinationForTrip={handleSelectDestinationForTrip}
             onViewDestination={handleViewDestination}
+            onGetDirections={handleGetDirections}
           />
         )}
 
@@ -101,6 +109,7 @@ export default function App() {
             onAuthFailure={handleAuthFailure}
             onSelectDestinationForTrip={handleSelectDestinationForTrip}
             onViewDestination={handleViewDestination}
+            onGetDirections={handleGetDirections}
           />
         )}
 
@@ -110,11 +119,16 @@ export default function App() {
             token={token}
             user={user}
             onBack={() => setActiveTab(previousTab)}
+            onGetDirections={handleGetDirections}
           />
         )}
 
         {activeTab === 'chat' && user && (
           <CommunityChat token={token} user={user} />
+        )}
+
+        {activeTab === 'map' && (
+          <MapExplorer focusDestination={mapFocusDestination} />
         )}
 
         {activeTab === 'itineraries' && user && (

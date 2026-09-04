@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Sparkles, Star, MapPin, Plus, Map as MapIcon, RefreshCw, Info } from 'lucide-react';
-import MapComponent from './MapComponent';
+import { Sparkles, Star, MapPin, Plus, RefreshCw, Navigation } from 'lucide-react';
 
-export default function Recommendations({ token, onAuthFailure, onSelectDestinationForTrip, onViewDestination }) {
+export default function Recommendations({ token, onAuthFailure, onSelectDestinationForTrip, onViewDestination, onGetDirections }) {
   const [recommendations, setRecommendations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [showMap, setShowMap] = useState(true);
 
   const fetchRecommendations = async () => {
     setLoading(true);
@@ -60,19 +58,8 @@ export default function Recommendations({ token, onAuthFailure, onSelectDestinat
             <RefreshCw size={16} className={loading ? 'spin' : ''} />
             <span>Refresh</span>
           </button>
-          <button
-            className={`btn ${showMap ? 'btn-primary' : 'btn-secondary'}`}
-            onClick={() => setShowMap(!showMap)}
-          >
-            <MapIcon size={18} />
-            <span>{showMap ? 'Hide Map' : 'Map View'}</span>
-          </button>
         </div>
       </div>
-
-      {showMap && recommendations.length > 0 && (
-        <MapComponent items={recommendations} center={[3.8480, 11.5021]} zoom={13} />
-      )}
 
       {error && (
         <div className="alert alert-error">
@@ -87,7 +74,12 @@ export default function Recommendations({ token, onAuthFailure, onSelectDestinat
       ) : (
         <div className="grid">
           {recommendations.map((dest) => (
-            <div key={dest.id} className="card" style={{ display: 'flex', flexDirection: 'column', height: '100%', position: 'relative' }}>
+            <div
+              key={dest.id}
+              className="card card-clickable"
+              style={{ display: 'flex', flexDirection: 'column', height: '100%', position: 'relative' }}
+              onClick={() => onViewDestination(dest)}
+            >
               {dest.match_score > 0 && (
                 <div style={{ position: 'absolute', top: '12px', right: '12px', zIndex: 2 }}>
                   <span className="badge badge-primary" style={{ boxShadow: 'var(--shadow-md)' }}>
@@ -132,16 +124,16 @@ export default function Recommendations({ token, onAuthFailure, onSelectDestinat
                   <button
                     className="btn btn-secondary"
                     style={{ padding: '0.4rem 0.8rem', fontSize: '0.85rem' }}
-                    onClick={() => onViewDestination(dest)}
+                    onClick={(e) => { e.stopPropagation(); onGetDirections(dest); }}
                   >
-                    <Info size={16} />
-                    <span>Details</span>
+                    <Navigation size={16} />
+                    <span>Directions</span>
                   </button>
 
                   <button
                     className="btn btn-primary"
                     style={{ padding: '0.4rem 0.8rem', fontSize: '0.85rem' }}
-                    onClick={() => onSelectDestinationForTrip(dest)}
+                    onClick={(e) => { e.stopPropagation(); onSelectDestinationForTrip(dest); }}
                   >
                     <Plus size={16} />
                     <span>Plan Trip</span>
