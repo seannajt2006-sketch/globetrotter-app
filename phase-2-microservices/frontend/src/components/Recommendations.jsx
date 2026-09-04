@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Sparkles, Star, MapPin, Plus, Map as MapIcon, RefreshCw } from 'lucide-react';
+import { Sparkles, Star, MapPin, Plus, Map as MapIcon, RefreshCw, Info } from 'lucide-react';
 import MapComponent from './MapComponent';
 
-export default function Recommendations({ token, onAuthFailure, onSelectDestinationForTrip }) {
+export default function Recommendations({ token, onAuthFailure, onSelectDestinationForTrip, onViewDestination }) {
   const [recommendations, setRecommendations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -128,14 +128,25 @@ export default function Recommendations({ token, onAuthFailure, onSelectDestinat
                   </div>
                 </div>
 
-                <button
-                  className="btn btn-primary"
-                  style={{ padding: '0.4rem 0.8rem', fontSize: '0.85rem' }}
-                  onClick={() => onSelectDestinationForTrip(dest)}
-                >
-                  <Plus size={16} />
-                  <span>Plan Trip</span>
-                </button>
+                <div style={{ display: 'flex', gap: '0.5rem' }}>
+                  <button
+                    className="btn btn-secondary"
+                    style={{ padding: '0.4rem 0.8rem', fontSize: '0.85rem' }}
+                    onClick={() => onViewDestination(dest)}
+                  >
+                    <Info size={16} />
+                    <span>Details</span>
+                  </button>
+
+                  <button
+                    className="btn btn-primary"
+                    style={{ padding: '0.4rem 0.8rem', fontSize: '0.85rem' }}
+                    onClick={() => onSelectDestinationForTrip(dest)}
+                  >
+                    <Plus size={16} />
+                    <span>Plan Trip</span>
+                  </button>
+                </div>
               </div>
             </div>
           ))}

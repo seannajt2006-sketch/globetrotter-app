@@ -71,6 +71,19 @@ services:
     networks:
       - globetrotter-network
 
+  # Microservice 4: Destination Comments & Global Community Chat (REST + Socket.IO)
+  community-service:
+    build:
+      context: ./services/community-service
+      dockerfile: Dockerfile
+    container_name: globetrotter-community-service
+    environment:
+      - PORT=5004
+    ports:
+      - "5004:5004"
+    networks:
+      - globetrotter-network
+
   # API Gateway: Single entry point proxying requests downstream
   api-gateway:
     build:
@@ -82,12 +95,14 @@ services:
       - USER_SERVICE_URL=http://user-service:5001
       - ITINERARY_SERVICE_URL=http://itinerary-service:5002
       - RECOMMENDATION_SERVICE_URL=http://recommendation-service:5003
+      - COMMUNITY_SERVICE_URL=http://community-service:5004
     ports:
       - "5000:5000"
     depends_on:
       - user-service
       - itinerary-service
       - recommendation-service
+      - community-service
     networks:
       - globetrotter-network
 
@@ -101,6 +116,7 @@ services:
       - "80:80"
     depends_on:
       - api-gateway
+      - community-service
     networks:
       - globetrotter-network
 

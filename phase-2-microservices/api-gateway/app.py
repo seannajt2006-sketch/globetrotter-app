@@ -22,6 +22,7 @@ CORS(app)
 USER_SERVICE_URL = os.environ.get("USER_SERVICE_URL", "http://user-service:5001")
 ITINERARY_SERVICE_URL = os.environ.get("ITINERARY_SERVICE_URL", "http://itinerary-service:5002")
 RECOMMENDATION_SERVICE_URL = os.environ.get("RECOMMENDATION_SERVICE_URL", "http://recommendation-service:5003")
+COMMUNITY_SERVICE_URL = os.environ.get("COMMUNITY_SERVICE_URL", "http://community-service:5004")
 
 
 def proxy_request(target_url: str):
@@ -92,13 +93,27 @@ def destination_service_proxy(path):
     return proxy_request(target)
 
 
+# Community Service Routes (destination comments + global chat REST; Socket.IO bypasses the gateway)
+@app.route("/comments", defaults={"path": ""}, methods=["GET", "POST", "PUT", "DELETE"])
+@app.route("/comments/<path:path>", methods=["GET", "POST", "PUT", "DELETE"])
+def comments_service_proxy(path):
+    target = f"{COMMUNITY_SERVICE_URL}/comments/{path}" if path else f"{COMMUNITY_SERVICE_URL}/comments"
+    return proxy_request(target)
+
+@app.route("/chat", defaults={"path": ""}, methods=["GET", "POST", "PUT", "DELETE"])
+@app.route("/chat/<path:path>", methods=["GET", "POST", "PUT", "DELETE"])
+def chat_service_proxy(path):
+    target = f"{COMMUNITY_SERVICE_URL}/chat/{path}" if path else f"{COMMUNITY_SERVICE_URL}/chat"
+    return proxy_request(target)
+
+
 # Health Check & Gateway Status
 @app.route("/health", methods=["GET"])
 def health_check():
     """Aggregated health check status of Gateway and downstream microservices."""
     services_status = {}
     
-    for name, url in [("user-service", USER_SERVICE_URL), ("itinerary-service", ITINERARY_SERVICE_URL), ("recommendation-service", RECOMMENDATION_SERVICE_URL)]:
+    for name, url in [("user-service", USER_SERVICE_URL), ("itinerary-service", ITINERARY_SERVICE_URL), ("recommendation-service", RECOMMENDATION_SERVICE_URL), ("community-service", COMMUNITY_SERVICE_URL)]:
         try:
             r = requests.get(f"{url}/health", timeout=3)
             services_status[name] = "healthy" if r.status_code == 200 else f"unhealthy ({r.status_code})"

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Search, Filter, Star, DollarSign, MapPin, Plus, Map as MapIcon } from 'lucide-react';
+import { Search, Filter, Star, DollarSign, MapPin, Plus, Map as MapIcon, Info } from 'lucide-react';
 import MapComponent from './MapComponent';
 
-export default function SearchDestinations({ user, onSelectDestinationForTrip }) {
+export default function SearchDestinations({ user, onSelectDestinationForTrip, onViewDestination }) {
   const [destinations, setDestinations] = useState([]);
   const [query, setQuery] = useState('');
   const [category, setCategory] = useState('');
@@ -172,16 +172,27 @@ export default function SearchDestinations({ user, onSelectDestinationForTrip })
                     </div>
                   </div>
 
-                  {user && (
+                  <div style={{ display: 'flex', gap: '0.5rem' }}>
                     <button
-                      className="btn btn-outline"
+                      className="btn btn-secondary"
                       style={{ padding: '0.4rem 0.8rem', fontSize: '0.85rem' }}
-                      onClick={() => onSelectDestinationForTrip(dest)}
+                      onClick={() => onViewDestination(dest)}
                     >
-                      <Plus size={16} />
-                      <span>Add to Trip</span>
+                      <Info size={16} />
+                      <span>Details</span>
                     </button>
-                  )}
+
+                    {user && (
+                      <button
+                        className="btn btn-outline"
+                        style={{ padding: '0.4rem 0.8rem', fontSize: '0.85rem' }}
+                        onClick={() => onSelectDestinationForTrip(dest)}
+                      >
+                        <Plus size={16} />
+                        <span>Add to Trip</span>
+                      </button>
+                    )}
+                  </div>
                 </div>
               </div>
             ))}

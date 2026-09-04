@@ -6,6 +6,8 @@ import SearchDestinations from './components/SearchDestinations';
 import Recommendations from './components/Recommendations';
 import CreateItinerary from './components/CreateItinerary';
 import ViewItineraries from './components/ViewItineraries';
+import DestinationDetail from './components/DestinationDetail';
+import CommunityChat from './components/CommunityChat';
 import { MapPin } from 'lucide-react';
 
 export default function App() {
@@ -16,6 +18,8 @@ export default function App() {
   });
   const [activeTab, setActiveTab] = useState('search');
   const [preselectedDestination, setPreselectedDestination] = useState(null);
+  const [selectedDestination, setSelectedDestination] = useState(null);
+  const [previousTab, setPreviousTab] = useState('search');
 
   const handleLoginSuccess = (authData) => {
     const userPayload = {
@@ -46,6 +50,12 @@ export default function App() {
   const handleSelectDestinationForTrip = (dest) => {
     setPreselectedDestination(dest);
     setActiveTab('create-itinerary');
+  };
+
+  const handleViewDestination = (dest) => {
+    setSelectedDestination(dest);
+    setPreviousTab(activeTab);
+    setActiveTab('destination-detail');
   };
 
   const handleItineraryCreated = () => {
@@ -81,6 +91,7 @@ export default function App() {
           <SearchDestinations
             user={user}
             onSelectDestinationForTrip={handleSelectDestinationForTrip}
+            onViewDestination={handleViewDestination}
           />
         )}
 
@@ -89,7 +100,21 @@ export default function App() {
             token={token}
             onAuthFailure={handleAuthFailure}
             onSelectDestinationForTrip={handleSelectDestinationForTrip}
+            onViewDestination={handleViewDestination}
           />
+        )}
+
+        {activeTab === 'destination-detail' && selectedDestination && (
+          <DestinationDetail
+            destination={selectedDestination}
+            token={token}
+            user={user}
+            onBack={() => setActiveTab(previousTab)}
+          />
+        )}
+
+        {activeTab === 'chat' && user && (
+          <CommunityChat token={token} user={user} />
         )}
 
         {activeTab === 'itineraries' && user && (

@@ -31,6 +31,19 @@ export default defineConfig({
         target: process.env.VITE_API_GATEWAY_URL || 'http://localhost:5000',
         changeOrigin: true,
       },
+      '/comments': {
+        target: process.env.VITE_API_GATEWAY_URL || 'http://localhost:5000',
+        changeOrigin: true,
+      },
+      '/chat': {
+        target: process.env.VITE_API_GATEWAY_URL || 'http://localhost:5000',
+        changeOrigin: true,
+      },
+      '/socket.io': {
+        target: process.env.VITE_COMMUNITY_SERVICE_URL || 'http://localhost:5004',
+        changeOrigin: true,
+        ws: true,
+      },
       '/health': {
         target: process.env.VITE_API_GATEWAY_URL || 'http://localhost:5000',
         changeOrigin: true,
