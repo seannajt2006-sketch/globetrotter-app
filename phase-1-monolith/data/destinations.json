@@ -1,0 +1,533 @@
+[
+  {
+    "id": "yaounde-002",
+    "name": "Restaurant Le Safoutier",
+    "country": "Cameroon",
+    "city": "Yaoundé",
+    "category": "restaurant",
+    "description": "Authentic Cameroonian cuisine featuring safou (bush butter) grilled with plantains and fish. A beloved local spot with one of the highest ratings on TripAdvisor.",
+    "tags": [
+      "restaurant",
+      "food",
+      "local-cuisine",
+      "grilled",
+      "fish"
+    ],
+    "cost_per_day": 8000,
+    "address": "Tsinga, Yaoundé",
+    "rating": 4.8,
+    "image_url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663686019938/GPVHLhPVLEFAKCRV.jpg"
+  },
+  {
+    "id": "yaounde-003",
+    "name": "Restaurant Le Biniou",
+    "country": "Cameroon",
+    "city": "Yaoundé",
+    "category": "restaurant",
+    "description": "A charming French brasserie in Bastos offering classic dishes like escargot, coq au vin, and an excellent wine selection in an elegant setting.",
+    "tags": [
+      "restaurant",
+      "food",
+      "french-cuisine",
+      "wine",
+      "elegant"
+    ],
+    "cost_per_day": 20000,
+    "address": "Bastos, Yaoundé",
+    "rating": 4.6,
+    "image_url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663686019938/wOEfVpNInILVTkaj.jpg"
+  },
+  {
+    "id": "yaounde-004",
+    "name": "Restaurant La Salsa",
+    "country": "Cameroon",
+    "city": "Yaoundé",
+    "category": "restaurant",
+    "description": "A vibrant Latin-inspired restaurant with live music, colorful decor, and a menu blending Cameroonian and international flavors. Popular with expats.",
+    "tags": [
+      "restaurant",
+      "food",
+      "music",
+      "latin",
+      "international"
+    ],
+    "cost_per_day": 18000,
+    "address": "Hippodrome, Yaoundé",
+    "rating": 4.1,
+    "image_url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663686019938/CyQTMTRDrmEogiJl.jpg"
+  },
+  {
+    "id": "yaounde-005",
+    "name": "Ô Vive Restaurant",
+    "country": "Cameroon",
+    "city": "Yaoundé",
+    "category": "restaurant",
+    "description": "An upscale dining experience in Bastos with an outdoor poolside setting. Serves fresh seafood, grilled meats, and creative cocktails.",
+    "tags": [
+      "restaurant",
+      "food",
+      "seafood",
+      "poolside",
+      "cocktails"
+    ],
+    "cost_per_day": 22000,
+    "address": "Bastos, Yaoundé",
+    "rating": 4.8,
+    "image_url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663686019938/cqSkDMbgpMEDuOmu.jpg"
+  },
+  {
+    "id": "yaounde-006",
+    "name": "Le Baron Restaurant-Café",
+    "country": "Cameroon",
+    "city": "Yaoundé",
+    "category": "restaurant",
+    "description": "A cozy café-restaurant known for its delicious hummus, burgers, and fresh ingredients. A favorite among young professionals and students.",
+    "tags": [
+      "restaurant",
+      "food",
+      "burger",
+      "hummus",
+      "cafe"
+    ],
+    "cost_per_day": 7000,
+    "address": "Nlongkak, Yaoundé",
+    "rating": 4.5,
+    "image_url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663686019938/juxzAOjZeVYfOzEq.jpg"
+  },
+  {
+    "id": "yaounde-009",
+    "name": "Restaurant Le Panier d'Afrique",
+    "country": "Cameroon",
+    "city": "Yaoundé",
+    "category": "restaurant",
+    "description": "An upscale pan-African restaurant featuring dishes from across the continent. Great ambiance with live saxophone music on Friday evenings.",
+    "tags": [
+      "restaurant",
+      "food",
+      "pan-african",
+      "music",
+      "upscale"
+    ],
+    "cost_per_day": 18000,
+    "address": "Bastos, Yaoundé",
+    "rating": 4.5,
+    "image_url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663686019938/YqBgHWSOIWbFgrHB.jpg"
+  },
+  {
+    "id": "yaounde-011",
+    "name": "Marché Central de Yaoundé",
+    "country": "Cameroon",
+    "city": "Yaoundé",
+    "category": "market",
+    "description": "The bustling Central Market of Yaoundé, the largest market in the city. Fresh produce, spices, clothing, and local crafts in a stunning circular building.",
+    "tags": [
+      "market",
+      "shopping",
+      "food",
+      "culture",
+      "spices",
+      "crafts"
+    ],
+    "cost_per_day": 0,
+    "address": "Centre Administratif",
+    "rating": 4.0,
+    "image_url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663686019938/WnMZmRnMWNVfQIuk.jpg"
+  },
+  {
+    "id": "yaounde-012",
+    "name": "Marché Mokolo",
+    "country": "Cameroon",
+    "city": "Yaoundé",
+    "category": "market",
+    "description": "One of the most famous and largest markets in Central Africa. An incredible sensory experience with thousands of vendors selling everything from food to electronics.",
+    "tags": [
+      "market",
+      "shopping",
+      "food",
+      "culture",
+      "electronics"
+    ],
+    "cost_per_day": 0,
+    "address": "Mokolo, Yaoundé",
+    "rating": 4.1,
+    "image_url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663686019938/lHpDoAzQlcDHNbWj.jpg"
+  },
+  {
+    "id": "yaounde-013",
+    "name": "Marché du Lac",
+    "country": "Cameroon",
+    "city": "Yaoundé",
+    "category": "market",
+    "description": "A lively neighborhood market near Lac Municipal. Great for fresh fruits, vegetables, and local street food like beignets and plantains.",
+    "tags": [
+      "market",
+      "food",
+      "street-food",
+      "fresh-produce"
+    ],
+    "cost_per_day": 0,
+    "address": "Lac Municipal, Yaoundé",
+    "rating": 3.9,
+    "image_url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663686019938/ZNKhaWVzStZvGigI.jpg"
+  },
+  {
+    "id": "yaounde-014",
+    "name": "Marché Madagascar",
+    "country": "Cameroon",
+    "city": "Yaoundé",
+    "category": "market",
+    "description": "A vibrant open-air market known for affordable clothing, textiles, and imported goods from Asia. A treasure hunt for bargain shoppers.",
+    "tags": [
+      "market",
+      "shopping",
+      "clothing",
+      "textiles",
+      "budget"
+    ],
+    "cost_per_day": 0,
+    "address": "Melen, Yaoundé",
+    "rating": 3.7,
+    "image_url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663686019938/lrABsGjWFSzzePbv.jpg"
+  },
+  {
+    "id": "yaounde-018",
+    "name": "Hôtel Hilton Yaoundé",
+    "country": "Cameroon",
+    "city": "Yaoundé",
+    "category": "accommodation",
+    "description": "A luxury hotel in Bastos district offering world-class amenities, a swimming pool, spa, and fine dining. The top-rated hotel in Yaoundé.",
+    "tags": [
+      "accommodation",
+      "luxury",
+      "pool",
+      "spa",
+      "business"
+    ],
+    "cost_per_day": 120000,
+    "address": "Bastos, Yaoundé",
+    "rating": 4.3,
+    "image_url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663686019938/RlHCBYmzYxRDjwac.jpg"
+  },
+  {
+    "id": "yaounde-019",
+    "name": "Hôtel La Falaise",
+    "country": "Cameroon",
+    "city": "Yaoundé",
+    "category": "accommodation",
+    "description": "A 5-star hotel in Bastos with stunning architecture, multiple restaurants, a rooftop pool, and conference facilities. A landmark of Yaoundé hospitality.",
+    "tags": [
+      "accommodation",
+      "luxury",
+      "pool",
+      "conference",
+      "five-star"
+    ],
+    "cost_per_day": 55000,
+    "address": "Bastos, Yaoundé",
+    "rating": 4.1,
+    "image_url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663686019938/fNvMnNIqyREjHVcY.jpg"
+  },
+  {
+    "id": "yaounde-020",
+    "name": "Star Land Hotel Bastos",
+    "country": "Cameroon",
+    "city": "Yaoundé",
+    "category": "accommodation",
+    "description": "A modern business hotel in Bastos with comfortable rooms, a rooftop bar, and excellent service. Popular with corporate travelers.",
+    "tags": [
+      "accommodation",
+      "modern",
+      "business",
+      "bar",
+      "comfortable"
+    ],
+    "cost_per_day": 65000,
+    "address": "Bastos, Yaoundé",
+    "rating": 4.1,
+    "image_url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663686019938/pxrYZGvZdQIVKSVX.jpg"
+  },
+  {
+    "id": "yaounde-021",
+    "name": "Prodiges Hôtel",
+    "country": "Cameroon",
+    "city": "Yaoundé",
+    "category": "accommodation",
+    "description": "A contemporary boutique hotel with stylish rooms, a swimming pool, and a restaurant serving both local and international cuisine.",
+    "tags": [
+      "accommodation",
+      "boutique",
+      "pool",
+      "restaurant",
+      "modern"
+    ],
+    "cost_per_day": 45000,
+    "address": "Omnisport, Yaoundé",
+    "rating": 4.2,
+    "image_url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663686019938/vrJXBuGigWuCZdsL.jpg"
+  },
+  {
+    "id": "yaounde-022",
+    "name": "Le Méridien Président",
+    "country": "Cameroon",
+    "city": "Yaoundé",
+    "category": "accommodation",
+    "description": "A five-star hotel overlooking the Mfoundi valley. Features multiple restaurants, a rooftop pool, and luxurious rooms with city views.",
+    "tags": [
+      "accommodation",
+      "luxury",
+      "pool",
+      "five-star",
+      "city-view"
+    ],
+    "cost_per_day": 140000,
+    "address": "Carrefour de l'Intendance, Yaoundé",
+    "rating": 4.5,
+    "image_url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663686019938/cROavmOEQyCpzhgv.jpg"
+  },
+  {
+    "id": "yaounde-023",
+    "name": "Résidence des Arts",
+    "country": "Cameroon",
+    "city": "Yaoundé",
+    "category": "accommodation",
+    "description": "A charming boutique guesthouse in Bastos decorated with local artworks. Offers cozy rooms, homemade breakfast, and a warm Cameroonian welcome.",
+    "tags": [
+      "accommodation",
+      "boutique",
+      "art",
+      "breakfast",
+      "cozy"
+    ],
+    "cost_per_day": 35000,
+    "address": "Bastos, Yaoundé",
+    "rating": 4.3,
+    "image_url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663686019938/aCqJyRXXzZYgJiFj.jpg"
+  },
+  {
+    "id": "yaounde-027",
+    "name": "Café Bénédictine",
+    "country": "Cameroon",
+    "city": "Yaoundé",
+    "category": "cafe",
+    "description": "A quiet café run by a local Benedictine community. Offers herbal teas, organic honey, and baked goods in a serene garden setting.",
+    "tags": [
+      "cafe",
+      "tea",
+      "organic",
+      "peaceful",
+      "garden"
+    ],
+    "cost_per_day": 3500,
+    "address": "Mvolyé, Yaoundé",
+    "rating": 4.3,
+    "image_url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663686019938/ZjOofBRlmHoBAJtl.jpg"
+  },
+  {
+    "id": "yaounde-028",
+    "name": "Musée National du Cameroun",
+    "country": "Cameroon",
+    "city": "Yaoundé",
+    "category": "cultural",
+    "description": "The National Museum of Cameroon housed in the former presidential palace. Features traditional art, masks, instruments, and artifacts from across the country.",
+    "tags": [
+      "cultural",
+      "history",
+      "art",
+      "museum",
+      "heritage"
+    ],
+    "cost_per_day": 3000,
+    "address": "Palais des Congrès, Centre Administratif",
+    "rating": 4.2,
+    "image_url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663686019938/eXhOoZuxOpdfLAFL.jpg"
+  },
+  {
+    "id": "yaounde-029",
+    "name": "Monument de la Réunification",
+    "country": "Cameroon",
+    "city": "Yaoundé",
+    "category": "cultural",
+    "description": "An iconic landmark of Yaoundé celebrating the reunification of Cameroon in 1961. Features a striking statue and offers panoramic views of the city.",
+    "tags": [
+      "cultural",
+      "history",
+      "monument",
+      "sightseeing"
+    ],
+    "cost_per_day": 0,
+    "address": "Carrefour du 20 Mai",
+    "rating": 3.8,
+    "image_url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663686019938/rWyDkCFNjwmLFXUt.jpg"
+  },
+  {
+    "id": "yaounde-030",
+    "name": "Jardin Botanique de Mvog-Betsi",
+    "country": "Cameroon",
+    "city": "Yaoundé",
+    "category": "cultural",
+    "description": "A peaceful botanical garden and zoo managed by IRAD. Features diverse tropical plants, orchids, small animals, and a serene walking trail.",
+    "tags": [
+      "cultural",
+      "nature",
+      "botanical",
+      "zoo",
+      "walking"
+    ],
+    "cost_per_day": 1000,
+    "address": "Mvog-Betsi, Yaoundé",
+    "rating": 4.1,
+    "image_url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663686019938/bwJyySwKpwipylKA.jpg"
+  },
+  {
+    "id": "yaounde-031",
+    "name": "Monument de l'Indépendance",
+    "country": "Cameroon",
+    "city": "Yaoundé",
+    "category": "cultural",
+    "description": "The Independence Monument at the heart of Yaoundé, a towering structure symbolizing Cameroon's freedom from colonial rule in 1960.",
+    "tags": [
+      "cultural",
+      "history",
+      "monument",
+      "gardens",
+      "national"
+    ],
+    "cost_per_day": 0,
+    "address": "Centre Administratif, Yaoundé",
+    "rating": 3.9,
+    "image_url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663686019938/BjVsQdqYiyWRCiTN.png"
+  },
+  {
+    "id": "yaounde-032",
+    "name": "Bois Sainte Anastasie",
+    "country": "Cameroon",
+    "city": "Yaoundé",
+    "category": "cultural",
+    "description": "A beautiful forested park on the edge of Yaoundé, offering hiking trails, bird watching, and a peaceful escape from the city bustle.",
+    "tags": [
+      "cultural",
+      "nature",
+      "hiking",
+      "bird-watching",
+      "peaceful"
+    ],
+    "cost_per_day": 2000,
+    "address": "Emana, Yaoundé",
+    "rating": 4.0,
+    "image_url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663686019938/ZjOofBRlmHoBAJtl.jpg"
+  },
+  {
+    "id": "yaounde-033",
+    "name": "Stade Ahmadou Ahidjo",
+    "country": "Cameroon",
+    "city": "Yaoundé",
+    "category": "cultural",
+    "description": "The national stadium of Cameroon, hosting football matches and major sporting events. An architectural landmark and the pride of Cameroonian sports.",
+    "tags": [
+      "cultural",
+      "sports",
+      "stadium",
+      "football",
+      "landmark"
+    ],
+    "cost_per_day": 0,
+    "address": "Tsinga, Yaoundé",
+    "rating": 4.0,
+    "image_url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663686019938/LMDHbrrIElbWakOU.jpg"
+  },
+  {
+    "id": "yaounde-039",
+    "name": "Mahima Restaurant",
+    "country": "Cameroon",
+    "city": "Yaoundé",
+    "category": "restaurant",
+    "description": "A popular Indian-Cameroonian fusion restaurant offering flavorful curries, biryani, and tandoori dishes in a comfortable setting.",
+    "tags": [
+      "restaurant",
+      "food",
+      "indian",
+      "fusion",
+      "curry"
+    ],
+    "cost_per_day": 12000,
+    "address": "Centre Administratif, Yaoundé",
+    "rating": 4.1,
+    "image_url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663686019938/GPVHLhPVLEFAKCRV.jpg"
+  },
+  {
+    "id": "yaounde-043",
+    "name": "Le Meridien Restaurant & Bar",
+    "country": "Cameroon",
+    "city": "Yaoundé",
+    "category": "restaurant",
+    "description": "The restaurant inside Le Méridien President hotel, offering fine dining with panoramic city views. Great for special occasions and business meals.",
+    "tags": [
+      "restaurant",
+      "food",
+      "fine-dining",
+      "city-view",
+      "business"
+    ],
+    "cost_per_day": 30000,
+    "address": "Carrefour de l'Intendance, Yaoundé",
+    "rating": 4.6,
+    "image_url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663686019938/cROavmOEQyCpzhgv.jpg"
+  },
+  {
+    "id": "yaounde-046",
+    "name": "Hôtel Franco Yaoundé",
+    "country": "Cameroon",
+    "city": "Yaoundé",
+    "category": "accommodation",
+    "description": "A well-located mid-range hotel in the city center offering comfortable rooms, a restaurant, and convenient access to major attractions.",
+    "tags": [
+      "accommodation",
+      "mid-range",
+      "city-center",
+      "restaurant",
+      "comfortable"
+    ],
+    "cost_per_day": 40000,
+    "address": "Centre Administratif, Yaoundé",
+    "rating": 3.8,
+    "image_url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663686019938/fNvMnNIqyREjHVcY.jpg"
+  },
+  {
+    "id": "yaounde-047",
+    "name": "Restaurant Ô Kiosque",
+    "country": "Cameroon",
+    "city": "Yaoundé",
+    "category": "restaurant",
+    "description": "A charming outdoor kiosk-style restaurant in Hippodrome serving fresh salads, grilled meats, and refreshing drinks. A local favorite.",
+    "tags": [
+      "restaurant",
+      "food",
+      "outdoor",
+      "salad",
+      "fresh"
+    ],
+    "cost_per_day": 8000,
+    "address": "Hippodrome, Yaoundé",
+    "rating": 4.0,
+    "image_url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663686019938/GxJqltEdwahFtBRQ.jpg"
+  },
+  {
+    "id": "yaounde-050",
+    "name": "Restaurant La Fourchette",
+    "country": "Cameroon",
+    "city": "Yaoundé",
+    "category": "restaurant",
+    "description": "A classic French restaurant in the city center offering authentic dishes like coq au vin, steak frites, and crème brûlée in an elegant setting.",
+    "tags": [
+      "restaurant",
+      "food",
+      "french-cuisine",
+      "elegant",
+      "classic"
+    ],
+    "cost_per_day": 22000,
+    "address": "Centre Administratif, Yaoundé",
+    "rating": 4.4,
+    "image_url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663686019938/wOEfVpNInILVTkaj.jpg"
+  }
+]
