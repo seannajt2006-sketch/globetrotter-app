@@ -1,0 +1,109 @@
+version: '3.8'
+
+services:
+  # Message Broker for Event-Driven Communication
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: globetrotter-rabbitmq
+    ports:
+      - "5672:5672"   # AMQP protocol port
+      - "15672:15672" # Web Management Console
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - globetrotter-network
+
+  # Microservice 1: User Management & Authentication
+  user-service:
+    build:
+      context: ./services/user-service
+      dockerfile: Dockerfile
+    container_name: globetrotter-user-service
+    environment:
+      - PORT=5001
+    ports:
+      - "5001:5001"
+    networks:
+      - globetrotter-network
+
+  # Microservice 2: Trip & Itinerary Management (Event Producer)
+  itinerary-service:
+    build:
+      context: ./services/itinerary-service
+      dockerfile: Dockerfile
+    container_name: globetrotter-itinerary-service
+    environment:
+      - PORT=5002
+      - RABBITMQ_HOST=rabbitmq
+      - RABBITMQ_PORT=5672
+    ports:
+      - "5002:5002"
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    networks:
+      - globetrotter-network
+
+  # Microservice 3: Travel Recommendations & Catalog (REST Client + Event Consumer)
+  recommendation-service:
+    build:
+      context: ./services/recommendation-service
+      dockerfile: Dockerfile
+    container_name: globetrotter-recommendation-service
+    environment:
+      - PORT=5003
+      - RABBITMQ_HOST=rabbitmq
+      - RABBITMQ_PORT=5672
+      - USER_SERVICE_URL=http://user-service:5001
+      - ITINERARY_SERVICE_URL=http://itinerary-service:5002
+    ports:
+      - "5003:5003"
+    depends_on:
+      user-service:
+        condition: service_started
+      itinerary-service:
+        condition: service_started
+      rabbitmq:
+        condition: service_healthy
+    networks:
+      - globetrotter-network
+
+  # API Gateway: Single entry point proxying requests downstream
+  api-gateway:
+    build:
+      context: ./api-gateway
+      dockerfile: Dockerfile
+    container_name: globetrotter-api-gateway
+    environment:
+      - PORT=5000
+      - USER_SERVICE_URL=http://user-service:5001
+      - ITINERARY_SERVICE_URL=http://itinerary-service:5002
+      - RECOMMENDATION_SERVICE_URL=http://recommendation-service:5003
+    ports:
+      - "5000:5000"
+    depends_on:
+      - user-service
+      - itinerary-service
+      - recommendation-service
+    networks:
+      - globetrotter-network
+
+  # React Frontend (Vite + Nginx + Leaflet Map)
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: globetrotter-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - api-gateway
+    networks:
+      - globetrotter-network
+
+networks:
+  globetrotter-network:
+    driver: bridge

@@ -1,0 +1,16 @@
+[
+  {
+    "id": "itin-demo-001",
+    "user_id": "user-demo-001",
+    "title": "Weekend in Bastos & Mvolye",
+    "destination": "Yaoundé, Cameroon",
+    "start_date": "2026-08-15",
+    "end_date": "2026-08-17",
+    "activities": [
+      "Dinner at Restaurant Le Biniou",
+      "Coffee at Café Bénédictine",
+      "Visit Musée National du Cameroun"
+    ],
+    "notes": "Book taxi in advance"
+  }
+]

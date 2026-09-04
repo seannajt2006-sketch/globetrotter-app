@@ -1,0 +1,22 @@
+[
+  {
+    "id": "user-demo-001",
+    "username": "sarah",
+    "email": "sarah@example.com",
+    "password": "pbkdf2:sha256:600000$somesalt$5f4dcc3b5aa765d61d8327deb882cf99",
+    "preferences": [
+      "food",
+      "culture",
+      "market"
+    ]
+  },
+  {
+    "id": "b172190f",
+    "username": "copilot_3015ad",
+    "email": "copilot_3015ad@example.com",
+    "password": "scrypt:32768:8:1$LJ8Yccm0uioqQvU8$bd2509ca12c854f533cfcc9ac5ac451a574302d6868d0371da3133b2ef3a461a4e818c1c8e932333ef0299e49ab5fd95879ac6edf0170058c2d0fa89b418d69f",
+    "preferences": [
+      "culture"
+    ]
+  }
+]
